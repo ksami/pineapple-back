@@ -28,9 +28,8 @@ io.on("connection", (socket) => {
     console.log(`${socket.id} connected`);
     socket.on("disconnect", () => console.log(`${socket.id} disconnected`));
 
-    // Log and send to everyone else
+    // Send to everyone else
     socket.on("music", (data) => {
-        console.log(`${socket.id} sends ${JSON.stringify(data)}`);
         socket.broadcast.emit("music", data);
     });
 });

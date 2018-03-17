@@ -4,13 +4,10 @@ import Tone from 'Tone';
 const el = document.getElementById('server-time');
 const synth = new Tone.Synth().toMaster();
 
-synth.triggerAttackRelease("C4", "4n");
-synth.triggerAttackRelease("D4", "4n");
-synth.triggerAttackRelease("E4", "4n");
-synth.triggerAttackRelease("F4", "4n");
-synth.triggerAttackRelease("G4", "4n");
 
 const socket = io();
+socket.on("connect", welcome);
+
 socket.on('time', (timeString) => {
   el.innerHTML = 'Server time: ' + timeString;
 });
@@ -38,3 +35,13 @@ setInterval(() => {
   });
   alt = !alt;
 }, 500);
+
+
+function welcome() {
+  const t = new Tone.Time("8n");
+  ["C4", "E4", "G4", "C5"].forEach((note) => {
+    synth.triggerAttackRelease(note, "8n", t.add("8n"));
+  });
+
+  console.log("Welcome!");
+}
