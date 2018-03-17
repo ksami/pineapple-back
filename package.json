@@ -20,11 +20,14 @@
   "homepage": "https://github.com/ksami/pineapple-back#readme",
   "dependencies": {
     "express": "4.16.3",
+    "piano-keyboard": "^2.1.4",
     "socket.io": "2.0.4",
     "socket.io-client": "^2.0.4",
     "tone": "^0.11.11"
   },
   "devDependencies": {
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.20.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
   }

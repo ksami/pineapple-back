@@ -1,8 +1,18 @@
 import io from 'socket.io-client';
+import Keyboard from 'piano-keyboard';
+import 'piano-keyboard/index.css';
 import Tone from 'Tone';
 
 const el = document.getElementById('server-time');
 const synth = new Tone.Synth().toMaster();
+const keyboard = new Keyboard({
+  element: document.getElementById('piano'),
+  range: ['c3', 'd6'],
+  ally: false
+});
+
+keyboard.on('noteOn', (data) => play(data.which, true));
+keyboard.on('noteOff', (data) => play(data.which, false));
 
 
 const socket = io();
@@ -27,15 +37,6 @@ socket.on("music", (data) => {
   }
 });
 
-let alt = true;
-setInterval(() => {
-  socket.emit("music", {
-    message: alt ? "on" : "off",  // on or off
-    note: "A4"  // or midi number or hz
-  });
-  alt = !alt;
-}, 500);
-
 
 function welcome() {
   const t = new Tone.Time("8n");
@@ -44,4 +45,19 @@ function welcome() {
   });
 
   console.log("Welcome!");
+}
+
+function play(midiNote, isOn) {
+  const note = new Tone.Frequency(midiNote, "midi").toNote();
+
+  if(isOn) {
+    synth.triggerAttack(note);
+  } else {
+    synth.triggerRelease();
+  }
+
+  socket.emit("music", {
+    message: isOn ? "on" : "off",  // on or off
+    note: note  // or midi number or hz
+  });
 }
