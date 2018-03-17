@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "bundle": "node ./node_modules/webpack-cli/bin/webpack.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +20,12 @@
   "homepage": "https://github.com/ksami/pineapple-back#readme",
   "dependencies": {
     "express": "4.16.3",
-    "socket.io": "2.0.4"
+    "socket.io": "2.0.4",
+    "socket.io-client": "^2.0.4",
+    "tone": "^0.11.11"
+  },
+  "devDependencies": {
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
   }
 }
